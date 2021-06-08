@@ -9,11 +9,38 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var contacts = [ContactProtocol]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        loadContacts()
     }
-
-
+    
+    private func loadContacts() {
+        contacts.append(Contact(title: "Alex", phone: "365-65-65"))
+        contacts.append(Contact(title: "Ann", phone: "+7-919-375-74-06"))
+    }
 }
 
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        contacts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var configuration = cell.defaultContentConfiguration()
+        
+        configuration.text = contacts[indexPath.row].title
+        //configuration.attributedText = contacts[indexPath.row].phone
+        configuration.secondaryText = contacts[indexPath.row].phone
+        cell.contentConfiguration = configuration
+        return cell
+
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        <#code#>
+    }
+    
+    
+}
